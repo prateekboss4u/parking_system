@@ -6,4 +6,5 @@ Rails.application.routes.draw do
   resources :subscriptions
   resources :rates
   resources :users
+  resources :locations
 end
