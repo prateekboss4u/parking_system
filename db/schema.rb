@@ -10,6 +10,15 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
+
+ActiveRecord::Schema[7.0].define(version: 2023_04_27_101130) do
+  create_table "subscriptions", force: :cascade do |t|
+    t.string "name", null: false
+    t.string "type_of_pass", null: false
+    t.string "plate_number", null: false
+    t.string "start_date", null: false
+    t.string "end_date", null: false
+  end
 ActiveRecord::Schema[7.0].define(version: 2023_04_27_100121) do
   create_table "rates", force: :cascade do |t|
     t.float "hourly_rate", null: false
