@@ -10,6 +10,14 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
+ActiveRecord::Schema[7.0].define(version: 2023_04_27_100121) do
+  create_table "rates", force: :cascade do |t|
+    t.float "hourly_rate", null: false
+    t.float "daily_pass", null: false
+    t.float "weekly_pass", null: false
+    t.float "monthly_pass", null: false
+  end
+
 ActiveRecord::Schema[7.0].define(version: 2023_04_27_101501) do
   create_table "users", force: :cascade do |t|
     t.string "username", null: false
