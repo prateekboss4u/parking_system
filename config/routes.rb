@@ -8,4 +8,5 @@ Rails.application.routes.draw do
   resources :rates
   resources :billings
   resources :users
+  resources :locations
 end
