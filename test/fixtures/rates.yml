@@ -1,0 +1,13 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  hourly_rate: 1.5
+  daily_pass: 1.5
+  weekly_pass: 1.5
+  monthly_pass: 1.5
+
+two:
+  hourly_rate: 1.5
+  daily_pass: 1.5
+  weekly_pass: 1.5
+  monthly_pass: 1.5

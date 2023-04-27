@@ -10,5 +10,14 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 0) do
+ActiveRecord::Schema[7.0].define(version: 2023_04_27_100121) do
+  create_table "rates", force: :cascade do |t|
+    t.float "hourly_rate", null: false
+    t.float "daily_pass", null: false
+    t.float "weekly_pass", null: false
+    t.float "monthly_pass", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
 end
