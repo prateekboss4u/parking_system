@@ -16,6 +16,14 @@ ActiveRecord::Schema[7.0].define(version: 2023_04_27_100121) do
     t.float "daily_pass", null: false
     t.float "weekly_pass", null: false
     t.float "monthly_pass", null: false
+  end
+
+ActiveRecord::Schema[7.0].define(version: 2023_04_27_101501) do
+  create_table "users", force: :cascade do |t|
+    t.string "username", null: false
+    t.string "type_of_user", null: false
+    t.string "location", null: false
+    t.string "city", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
