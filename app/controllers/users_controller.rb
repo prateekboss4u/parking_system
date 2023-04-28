@@ -41,21 +41,6 @@ class UsersController < ApplicationController
   end
 
 
-  # owner functionality call be action
-  # if owener check in views
-  def owner_action
-    @user = User.find(params[:id])
-    # will create location and rates
-
-  end
-
-  # operator functionality call be action
-  def operator_action
-    @user = User.find(params[:id])
-    #will create  subscriptions
-
-  end
-
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_user
