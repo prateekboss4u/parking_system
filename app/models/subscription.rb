@@ -1,5 +1,6 @@
 class Subscription < ApplicationRecord
-
+    belongs_to :user
+    
     validates :name, presence: true, exclusion: { in: %w(owner operator) }
     validates :type_of_pass, presence: true, inclusion: { in: %w(monthly weekly daily none) }
     validates :plate_number, presence: true, uniqueness: true
@@ -17,11 +18,4 @@ class Subscription < ApplicationRecord
     
         errors.add(:end_date, "must be after the start date") if end_date < start_date
       end
-
-        
-    
-
-
-
-
 end
