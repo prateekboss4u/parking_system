@@ -1,4 +1,10 @@
 class User < ApplicationRecord
+    # Relationships
+    has_one :locations
+    has_one :rates
+    has_many :subscriptions
+
+
     validates :username, presence: true
     validates :type_of_user, presence: true
     validate :role_validation
@@ -11,7 +17,12 @@ class User < ApplicationRecord
     def owner_action
         @user = User.find(params[:id])
         # will create location and rates
-
+        locations.create(
+            location_name: location_name,
+            two_wheeler_capacity: two_wheeler_capacity,
+            four_wheeler_capacity: four_wheeler_capacity,
+            commercial_vehicle_capacity: commercial_vehicle_capacity
+        )
     end
 
     # operator functionality call be action
