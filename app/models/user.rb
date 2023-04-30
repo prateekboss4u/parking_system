@@ -1,10 +1,7 @@
 class User < ApplicationRecord
     # Relationships
-    if :is_owner?
-        has_many :locations 
-    else
-        has_many :subscriptions
-    end
+    has_many :locations 
+
 
 
     validates :username, presence: true
@@ -27,25 +24,9 @@ class User < ApplicationRecord
         )
     end
 
-    # operator functionality call be action
-    def operator_action
-        @user = User.find(params[:id])
-        #will create  subscriptions
-        subscriptions.create(
-            name: name,
-            type_of_pass: type_of_pass,
-            plate_number: plate_number,
-            start_date: start_date,
-            end_date: end_date
-        )
-    end
-
+    
 
     private
-
-    def is_owner?
-        type_of_user == 'owner'
-    end
 
     def role_validation
         roles = ['owner', 'operator']
