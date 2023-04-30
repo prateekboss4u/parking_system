@@ -1,5 +1,5 @@
 class Subscription < ApplicationRecord
-    belongs_to :user
+    belongs_to :location
     
     validates :name, presence: true, exclusion: { in: %w(owner operator) }
     validates :type_of_pass, presence: true, inclusion: { in: %w(monthly weekly daily none) }
