@@ -41,10 +41,55 @@ class UsersController < ApplicationController
   end
 
 
+  #Assigning Roles as owner or opearator
+  def assign_role
+    @user = User.find(params[:id])
+
+    if @user.type_of_user == 'owner'
+      owner_action
+    else
+      operator_action
+    end
+
+  end
+
+  def owner_action
+    @location = @user.owner_action(location_name: owner_action_params[:location_name], 
+                                   two_wheeler_capacity: owner_action_params[:two_wheeler_capacity], four_wheeler_capacity: owner_action_params[:four_wheeler_capacity], commercial_vehicle_capacity: owner_action_param[:commercial_vehicle_capacity])
+    if @location.errors.blank?
+      render :location, status: :created
+    else
+      render json: @location.errors, status: :unprocessable_entity
+    end
+  end
+
+  def operator_action
+    @subscription = @user.operator_action(name: operator_action_params[:name], 
+                                          type_of_pass: operator_action_params[:type_of_pass], 
+                                          plate_number: operator_action_params[:plate_number], 
+                                          start_date: operator_action_params[:start_date], 
+                                          end_date: operator_action_params[:end_date])
+    if @subscription.errors.blank?
+      render :subscription, status: :created
+    else
+      render json: @subscription.errors, status: :unprocessable_entity
+    end
+  end
+
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_user
       @user = User.find(params[:id])
+    end
+
+    # Parameters for location
+    def owner_action_params
+      params.permit(:location_name, :two_wheeler_capacity, :four_wheeler_capacity, :commercial_vehicle_capacity)
+    end
+
+    def operator_action_params
+      params.permit(:name, :type_of_pass, :plate_number, :start_date, :end_date)
     end
 
     # Only allow a list of trusted parameters through.
