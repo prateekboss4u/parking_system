@@ -7,16 +7,15 @@ class Rate < ApplicationRecord
     validates :monthly_pass, presence: true, numericality: {greater_than:0}
 
     #Regular Method
-    def calculate_cost(duration_in_hours)
-        case name
-        when 'Hourly'
-            hourly_rate * duration_in_hours
-        when 'Daily'
-            daily_rate * (duration_in_hours / 24.0).ceil
-        when 'Weekly'
-            weekly_rate * (duration_in_hours / 168.0).ceil
-        when 'Monthly'
-            monthly_rate * (duration_in_hours / 720.0).ceil
+    def rate_for_duration(duration_in_minutes)
+        if duration_in_minutes < 60 
+            hourly_rate
+        elsif duration_in_minutes < 24 * 60
+            daily_pass
+        elsif duration_in_minutes < 7 * 24 * 60
+            weekly_pass
+        else
+            monthly_pass
         end
     end
 end
