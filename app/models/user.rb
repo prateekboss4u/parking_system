@@ -3,6 +3,7 @@ class User < ApplicationRecord
     has_many :locations 
 
 
+
     validates :username, presence: true
     validates :type_of_user, presence: true
     validate :role_validation

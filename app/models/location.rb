@@ -11,6 +11,7 @@ class Location < ApplicationRecord
     validates :commercial_vehicle_capacity, numericality: { greater_than_or_equal_to: 0 }
 
 
+
     def check_user_type
         user.type_of_user == 'operator' ? operate_action() : owner_action()
     end
@@ -34,6 +35,7 @@ class Location < ApplicationRecord
             monthly_pass: monthly_pass,
         )
     end
+
 
 
     private
