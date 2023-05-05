@@ -57,7 +57,7 @@ class LocationsController < ApplicationController
   end
   #Show all the Billing
   def statement
-    @location = Location.find_by(location_name: "Phoenix Mall")
+    @location = Location.find_by(location_name: statement_params[:location_name])
     
     if @location
       @statement = @location.fetch_statement()
