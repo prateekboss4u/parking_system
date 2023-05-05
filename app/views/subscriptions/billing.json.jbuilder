@@ -1,0 +1,1 @@
+json.partial! "subscriptions/billing", subscription: @subscription, billing: @billing
