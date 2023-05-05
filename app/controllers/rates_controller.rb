@@ -1,5 +1,5 @@
 class RatesController < ApplicationController
-  before_action :set_rate, only: %i[ show update destroy ]
+  before_action :set_rate, only: %i[ show update destroy operator_action ]
 
   # GET /rates
   # GET /rates.json
@@ -39,6 +39,20 @@ class RatesController < ApplicationController
   def destroy
     @rate.destroy
   end
+  
+  def operator_action
+    @subscription = @rate.operator_action(name: operator_action_params[:name],
+                                              type_of_pass: operator_action_params[:type_of_pass], 
+                                              plate_number: operator_action_params[:plate_number], 
+                                              start_date: operator_action_params[:start_date], 
+                                              end_date: operator_action_params[:end_date])
+    if @subscription.errors.blank?
+      render :subscription, status: :created
+    else
+      render json: @subscription.errors, status: :unprocessable_entity
+    end
+  end
+
 
   private
     # Use callbacks to share common setup or constraints between actions.
@@ -49,5 +63,9 @@ class RatesController < ApplicationController
     # Only allow a list of trusted parameters through.
     def rate_params
       params.require(:rate).permit(:hourly_rate, :daily_pass, :weekly_pass, :monthly_pass)
+    end
+
+    def operator_action_params
+      params.permit(:name, :type_of_pass, :plate_number, :start_date, :end_date)
     end
 end

@@ -8,7 +8,12 @@ Rails.application.routes.draw do
   #resources :rates
   #resources :billings
   resources :users
+  #post 'subscriptions/:id/bill_calculation', to: 'subscriptions#bill_calculation', as: 'subscription_bill_calculation'
+  get 'locations/statement', to: 'locations#statement', as: 'location_statement' 
+  get 'subscriptions/receipt', to: 'subscriptions#receipt', as: 'subscription_receipt'
   post 'locations/:id/owner_action', to: 'locations#owner_action', as: 'location_owner_action'
-  post 'locations/:id/operator_action', to: 'locations#operator_action', as: 'location_operator_action'
+  post 'rates/:id/operator_action', to: 'rates#operator_action', as: 'rate_operator_action'
   resources :locations
+  resources :subscriptions
+  resources :rates
 end
