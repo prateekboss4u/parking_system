@@ -2,10 +2,10 @@ class Location < ApplicationRecord
     # Relationships
     belongs_to :user
     has_many :rates
-    has_many :subscriptions
+    has_many :subscriptions, through: :rates
 
     validate :is_owner
-    validates :location_name, presence: true
+    validates :location_name, presence: true, uniqueness: { scope: :location_name }
     validates :two_wheeler_capacity, numericality: { greater_than_or_equal_to: 0 }
     validates :four_wheeler_capacity, numericality: { greater_than_or_equal_to: 0 }
     validates :commercial_vehicle_capacity, numericality: { greater_than_or_equal_to: 0 }
@@ -16,19 +16,10 @@ class Location < ApplicationRecord
         user.type_of_user == 'operator' ? operate_action() : owner_action()
     end
     # Subscription management for operateor user
-    def operator_action(name:nil, type_of_pass:nil, plate_number: nil, start_date: nil, end_date: nil)
-        # will create location and rates
-        subscriptions.create(
-            name: name,
-            type_of_pass: type_of_pass,
-            plate_number: plate_number,
-            start_date: start_date,
-            end_date: end_date
-        )
-    end
 
     def owner_action(hourly_rate:nil, daily_pass:nil, weekly_pass: nil, monthly_pass:nil)
         rates.create(
+            user_id: id,
             hourly_rate: hourly_rate,
             daily_pass: daily_pass,
             weekly_pass: weekly_pass,
@@ -36,6 +27,12 @@ class Location < ApplicationRecord
         )
     end
 
+    # Searching in Subscriptions
+    def fetch_statement()
+
+        return { status: true, transactions: subscriptions.all, errors: nil }
+
+    end
 
 
     private

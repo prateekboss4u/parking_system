@@ -1,5 +1,5 @@
 class LocationsController < ApplicationController
-  before_action :set_location, only: %i[ show update destroy owner_action operator_action]
+  before_action :set_location, only: %i[ show update destroy owner_action ]
 
   # GET /locations
   # GET /locations.json
@@ -40,18 +40,6 @@ class LocationsController < ApplicationController
     @location.destroy
   end
 
-  def operator_action
-    @subscription = @location.operator_action(name: operator_action_params[:name],
-                                              type_of_pass: operator_action_params[:type_of_pass], 
-                                              plate_number: operator_action_params[:plate_number], 
-                                              start_date: operator_action_params[:start_date], 
-                                              end_date: operator_action_params[:end_date])
-    if @subscription.errors.blank?
-      render :subscription, status: :created
-    else
-      render json: @subscription.errors, status: :unprocessable_entity
-    end
-  end
   def owner_action
     @rate = @location.owner_action(hourly_rate: owner_action_params[:hourly_rate],
                                     daily_pass: owner_action_params[:daily_pass],
@@ -67,6 +55,22 @@ class LocationsController < ApplicationController
       render json: @rate.errors, status: :unprocessable_entity
     end
   end
+  #Show all the Billing
+  def statement
+    @location = Location.find_by(location_name: "Phoenix Mall")
+    
+    if @location
+      @statement = @location.fetch_statement()
+      if @statement[:status]
+        render :statement, status: :ok
+      else
+        render json: 'No entry in the subscription book', status: :unprocessable_entity
+      end
+    else
+      render json: 'Valid Location was not found!', status: :unprocessable_entity
+    end
+  end
+
 
   private
     # Use callbacks to share common setup or constraints between actions.
@@ -78,12 +82,12 @@ class LocationsController < ApplicationController
     def location_params
       params.require(:location).permit(:location_name, :two_wheeler_capacity, :four_wheeler_capacity, :commercial_vehicle_capacity)
     end
-
-    def operator_action_params
-      params.permit(:name, :type_of_pass, :plate_number, :start_date, :end_date)
-    end
     
     def owner_action_params
       parems.permit(:hourly_rate, :daily_pass, :weekly_pass, :monthly_pass)
+    end
+
+    def statement_params
+      params.permit(:location_name)
     end
 end
